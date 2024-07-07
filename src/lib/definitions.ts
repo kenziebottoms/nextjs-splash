@@ -11,6 +11,7 @@ export type Plant = {
   ownerId: string;
   name: string;
   careInterval: number;
+  image: string;
 };
 
 export type Species = {

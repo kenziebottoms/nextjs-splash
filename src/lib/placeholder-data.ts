@@ -34,6 +34,8 @@ export const plants: Plant[] = [
     name: 'pancake plant',
     careInterval: 7,
     ownerId: users[0].id,
+    image:
+      'https://images.immediate.co.uk/production/volatile/sites/10/2021/03/2048x1365-Pilea-Peperomioides-SEO-GettyImages-1225860485-79b134d.jpg?quality=90&webp=true&resize=1880,1254',
   },
   {
     id: 'd0dfee9c-c8ed-4833-8554-fcd292f2b0f0',
@@ -41,6 +43,8 @@ export const plants: Plant[] = [
     name: 'lucky bamboo',
     careInterval: 21,
     ownerId: users[0].id,
+    image:
+      'https://cdn.shopify.com/s/files/1/2101/0999/files/elton-sipp-xKEvndpS4I0-unsplash_large.jpg?v=1579872837',
   },
   {
     id: '3f628124-7e42-489e-9cc0-b0e0f28f0429',
@@ -48,6 +52,8 @@ export const plants: Plant[] = [
     name: 'fern spores',
     careInterval: 7,
     ownerId: users[0].id,
+    image:
+      'https://images.immediate.co.uk/production/volatile/sites/10/2018/08/58ae417d-c9e7-431b-9f85-efb522459e87-4ba5f9b.jpg?quality=90&webp=true&resize=900,600',
   },
 ];
 

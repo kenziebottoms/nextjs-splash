@@ -23,7 +23,7 @@ async function seedUsers() {
       return client.sql`
         INSERT INTO users (id, name, email, password)
         VALUES (${user.id}, ${user.name}, ${user.email}, ${hashedPassword})
-        ON CONFLICT (id) DO NOTHING;
+        ON CONFLICT (id) DO UPDATE;
       `;
     }),
   );
@@ -47,7 +47,7 @@ async function seedSpecies() {
       (specie) => client.sql`
         INSERT INTO species (id, name, scientific_name)
         VALUES (${specie.id}, ${specie.name}, ${specie.scientificName})
-        ON CONFLICT (id) DO NOTHING;
+        ON CONFLICT (id) DO UPDATE;
       `,
     ),
   );
@@ -73,7 +73,7 @@ async function seedPlants() {
       (plant) => client.sql`
         INSERT INTO plants (id, species_id, owner_id, name, care_interval)
         VALUES (${plant.id}, ${plant.speciesId}, ${plant.ownerId}, ${plant.name}, ${plant.careInterval})
-        ON CONFLICT (id) DO NOTHING;
+        ON CONFLICT (id) DO UPDATE;
       `,
     ),
   );
@@ -97,7 +97,7 @@ async function seedActivities() {
       (activity) => client.sql`
         INSERT INTO activities (id, plant_id, date)
         VALUES (${activity.id}, ${activity.plantId}, ${activity.date})
-        ON CONFLICT (id) DO NOTHING;
+        ON CONFLICT (id) DO UPDATE;
       `,
     ),
   );
