@@ -1,13 +1,18 @@
 import { db } from '@vercel/postgres';
 import bcrypt from 'bcrypt';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
 import { activities, plants, species, users } from '@/lib/placeholder-data';
 
 const client = await db.connect();
 
-async function seedUsers() {
+async function seedUsers(overwrite: boolean) {
   await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
+  if (overwrite) {
+    await client.sql`
+      DROP TABLE IF EXISTS users;
+    `;
+  }
   await client.sql`
     CREATE TABLE IF NOT EXISTS users (
       id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
@@ -31,9 +36,14 @@ async function seedUsers() {
   return insertedUsers;
 }
 
-async function seedSpecies() {
+async function seedSpecies(overwrite: boolean) {
   await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
 
+  if (overwrite) {
+    await client.sql`
+      DROP TABLE IF EXISTS species;
+    `;
+  }
   await client.sql`
     CREATE TABLE IF NOT EXISTS species (
       id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
@@ -55,24 +65,30 @@ async function seedSpecies() {
   return insertedSpecies;
 }
 
-async function seedPlants() {
+async function seedPlants(overwrite: boolean) {
   await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
 
+  if (overwrite) {
+    await client.sql`
+      DROP TABLE IF EXISTS plants;
+    `;
+  }
   await client.sql`
     CREATE TABLE IF NOT EXISTS plants (
       id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
       species_id UUID NOT NULL,
       owner_id UUID NOT NULL,
       name VARCHAR(255) NOT NULL,
-      care_interval INT NOT NULL
+      care_interval INT NOT NULL,
+      image VARCHAR(255)
     );
   `;
 
   const insertedPlants = await Promise.all(
     plants.map(
       (plant) => client.sql`
-        INSERT INTO plants (id, species_id, owner_id, name, care_interval)
-        VALUES (${plant.id}, ${plant.speciesId}, ${plant.ownerId}, ${plant.name}, ${plant.careInterval})
+        INSERT INTO plants (id, species_id, owner_id, name, care_interval, image)
+        VALUES (${plant.id}, ${plant.speciesId}, ${plant.ownerId}, ${plant.name}, ${plant.careInterval}, ${plant.image})
         ON CONFLICT (id) DO NOTHING;
       `,
     ),
@@ -81,9 +97,14 @@ async function seedPlants() {
   return insertedPlants;
 }
 
-async function seedActivities() {
+async function seedActivities(overwrite: boolean) {
   await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
 
+  if (overwrite) {
+    await client.sql`
+      DROP TABLE IF EXISTS activities;
+    `;
+  }
   await client.sql`
     CREATE TABLE IF NOT EXISTS activities (
       id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
@@ -105,13 +126,16 @@ async function seedActivities() {
   return insertedPlants;
 }
 
-export async function GET() {
+export async function GET(request: NextRequest) {
+  const { searchParams } = request.nextUrl;
+  const overwrite = searchParams.get('overwrite') === 'true';
+
   try {
     await client.sql`BEGIN`;
-    await seedUsers();
-    await seedSpecies();
-    await seedPlants();
-    await seedActivities();
+    await seedUsers(overwrite);
+    await seedSpecies(overwrite);
+    await seedPlants(overwrite);
+    await seedActivities(overwrite);
     await client.sql`COMMIT`;
 
     return NextResponse.json({ message: 'Database seeded successfully' });
