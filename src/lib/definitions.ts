@@ -34,5 +34,5 @@ export type PlantActivity = {
   careInterval: number;
   image: string;
   plantId: string;
-  date: Date | string;
+  date: Date;
 };

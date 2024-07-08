@@ -1,3 +1,5 @@
+import { parse } from 'date-fns';
+
 import { Activity, Plant, Species, User } from './definitions';
 
 export const users: User[] = [
@@ -61,16 +63,16 @@ export const activities: Activity[] = [
   {
     id: 'd500a509-716a-40d5-9cdd-fbbda9d684dd',
     plantId: 'bc7375cd-c2d3-4fb6-90cc-c7050213fc8a',
-    date: '2024-06-24',
+    date: parse('2024-06-24', 'yyyy-MM-dd', new Date()),
   },
   {
     id: 'e9380018-8611-4c89-b673-c2e4ac3eba5e',
     plantId: 'd0dfee9c-c8ed-4833-8554-fcd292f2b0f0',
-    date: '2024-06-24',
+    date: parse('2024-06-24', 'yyyy-MM-dd', new Date()),
   },
   {
     id: '754c27a2-a398-4552-a29f-81e84390b198',
     plantId: '3f628124-7e42-489e-9cc0-b0e0f28f0429',
-    date: '2024-06-24',
+    date: parse('2024-06-24', 'yyyy-MM-dd', new Date()),
   },
 ];

@@ -1,5 +1,6 @@
 import { db } from '@vercel/postgres';
 import bcrypt from 'bcrypt';
+import { format } from 'date-fns';
 import { NextRequest, NextResponse } from 'next/server';
 
 import { activities, plants, species, users } from '@/lib/placeholder-data';
@@ -109,7 +110,7 @@ async function seedActivities(overwrite: boolean) {
     CREATE TABLE IF NOT EXISTS activities (
       id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
       plant_id UUID NOT NULL,
-      date DATE NOT NULL
+      date DATE NOT NULL DEFAULT NOW()
     );
   `;
 
@@ -117,7 +118,7 @@ async function seedActivities(overwrite: boolean) {
     activities.map(
       (activity) => client.sql`
         INSERT INTO activities (id, plant_id, date)
-        VALUES (${activity.id}, ${activity.plantId}, ${activity.date})
+        VALUES (${activity.id}, ${activity.plantId}, ${format(activity.date, 'yyyy-MM-dd')})
         ON CONFLICT (id) DO NOTHING;
       `,
     ),
