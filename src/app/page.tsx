@@ -1,9 +1,10 @@
 import { sql } from '@vercel/postgres';
+import { format } from 'date-fns';
 import Head from 'next/head';
 import * as React from 'react';
 import '@/lib/env';
 
-import { Plant } from '@/lib/definitions';
+import { Plant, PlantActivity } from '@/lib/definitions';
 
 /**
  * SVGR Support
@@ -24,7 +25,7 @@ export default async function HomePage() {
     WHERE owner_id='286593b0-a84c-44b4-99c1-53e560e085b5'
     ORDER BY name;
   `;
-  const { rows: recentlyWateredPlants }: { rows: Plant[] } = await sql`
+  const { rows: recentlyWateredPlants }: { rows: PlantActivity[] } = await sql`
     SELECT *
     FROM plants
     LEFT JOIN activities ON activities.plant_id = plants.id
@@ -65,8 +66,10 @@ export default async function HomePage() {
             <div className='bg-white p-4 text-black col-span-2 row-span-3'>
               <h2>Recently Watered</h2>
               <ul className='list-disc ml-6 pt-2'>
-                {recentlyWateredPlants.map((plant) => (
-                  <li key={plant.id}>{plant.name}</li>
+                {recentlyWateredPlants.map((plantActivity) => (
+                  <li key={plantActivity.id}>
+                    {plantActivity.name} ({format(plantActivity.date, 'M/d/y')})
+                  </li>
                 ))}
               </ul>
             </div>
