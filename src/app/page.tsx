@@ -38,22 +38,33 @@ export default async function HomePage() {
         <title>Hi</title>
       </Head>
       <section className='bg-blue-950 text-white'>
-        <div className='layout relative flex min-h-screen flex-col justify-center py-12'>
-          <h1 className='text-center'>Splash</h1>
+        <div className='relative flex min-h-screen flex-col justify-center'>
+          <h1 className='text-center mt-4'>Splash</h1>
 
-          <div className='flex flex-row justify-center p-4 gap-4'>
-            <div className='bg-white p-4 text-black'>
+          <div className='grid grid-cols-6 grid-rows-4 p-4 gap-4 grow'>
+            {alphabeticalPlants.map((plant) => (
+              <div
+                key={plant.id}
+                style={{
+                  backgroundImage: `url(${plant.image})`,
+                  backgroundPosition: 'center',
+                  backgroundSize: 'cover',
+                }}
+              />
+            ))}
+
+            <div className='bg-white p-4 text-black col-span-2 row-span-3'>
               <h2>All Plants</h2>
-              <ul className='list-disc ml-6'>
+              <ul className='list-disc ml-6 pt-2'>
                 {alphabeticalPlants.map((plant) => (
                   <li key={plant.id}>{plant.name}</li>
                 ))}
               </ul>
             </div>
 
-            <div className='bg-white p-4 text-black'>
+            <div className='bg-white p-4 text-black col-span-2 row-span-3'>
               <h2>Recently Watered</h2>
-              <ul className='list-disc ml-6'>
+              <ul className='list-disc ml-6 pt-2'>
                 {recentlyWateredPlants.map((plant) => (
                   <li key={plant.id}>{plant.name}</li>
                 ))}
