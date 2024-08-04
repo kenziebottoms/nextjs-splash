@@ -27,6 +27,11 @@ export const species: Species[] = [
     name: 'pancake plant',
     scientificName: 'Pilea peperomioides',
   },
+  {
+    id: 'cbc6715d-a6a8-494c-8fc2-f3a4c503e638',
+    name: 'Heartleaf philodendron',
+    scientificName: 'Philodendron hederaceum',
+  },
 ];
 
 export const plants: Plant[] = [
@@ -57,6 +62,24 @@ export const plants: Plant[] = [
     image:
       'https://images.immediate.co.uk/production/volatile/sites/10/2018/08/58ae417d-c9e7-431b-9f85-efb522459e87-4ba5f9b.jpg?quality=90&webp=true&resize=900,600',
   },
+  {
+    id: '3956dfa6-0d46-4463-b3ac-a8c47288b820',
+    name: '1-heartleaf philodendron',
+    speciesId: 'cbc6715d-a6a8-494c-8fc2-f3a4c503e638',
+    careInterval: 7,
+    ownerId: users[0].id,
+    image:
+      'https://www.publicgoods.com/cdn/shop/products/philodendron_brasil_4in_PDP_02_1000x.jpg?v=1682606394',
+  },
+  {
+    id: '71cd6dc6-68c1-4af0-b0d8-e83db652ca16',
+    name: '2-heartleaf philodendron',
+    speciesId: 'cbc6715d-a6a8-494c-8fc2-f3a4c503e638',
+    careInterval: 7,
+    ownerId: users[0].id,
+    image:
+      'https://www.publicgoods.com/cdn/shop/products/philodendron_brasil_4in_PDP_01_1000x.jpg?v=1682606394',
+  },
 ];
 
 export const activities: Activity[] = [
@@ -74,5 +97,15 @@ export const activities: Activity[] = [
     id: '754c27a2-a398-4552-a29f-81e84390b198',
     plantId: '3f628124-7e42-489e-9cc0-b0e0f28f0429',
     date: parse('2024-06-24', 'yyyy-MM-dd', new Date()),
+  },
+  {
+    id: '2b72a926-cd0b-40c9-a788-d5e9e87f602d',
+    plantId: '3956dfa6-0d46-4463-b3ac-a8c47288b820',
+    date: parse('2024-08-04', 'yyyy-MM-dd', new Date()),
+  },
+  {
+    id: '0160d165-ae7c-4c20-9ae3-a9e415c24643',
+    plantId: '71cd6dc6-68c1-4af0-b0d8-e83db652ca16',
+    date: parse('2024-08-04', 'yyyy-MM-dd', new Date()),
   },
 ];
